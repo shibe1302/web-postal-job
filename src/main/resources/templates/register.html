@@ -74,8 +74,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Email</label>
-                                    <input class="input--style-4" type="email" th:field="*{email}"
-                                        th:value="@{con cac}">
+                                    <input class="input--style-4" type="email" th:field="*{email}">
                                     <div th:if="${error}" class="invalid-feedback">
                                         <p th:text="${error}"></p>
                                     </div>
