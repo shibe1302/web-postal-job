@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,10 +17,14 @@ import com.shiba1302.timkiemvieclam.services.CustomUserDetailsService;
 public class webConfig {
 
     private final CustomUserDetailsService customUserDetailsService;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
-    public webConfig(CustomUserDetailsService customUserDetailsService) {
+    public webConfig(CustomUserDetailsService customUserDetailsService,
+            CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
         this.customUserDetailsService = customUserDetailsService;
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+
     }
 
     private final String[] publicURL = { "/",
@@ -32,6 +37,7 @@ public class webConfig {
             "/css/**",
             "/summernote/**",
             "/registerAssets/**",
+            "/loginAssets/**",
             "/js/**",
             "/*.css",
             "/*.js",
@@ -45,6 +51,13 @@ public class webConfig {
             auth.requestMatchers(publicURL).permitAll();
             auth.anyRequest().authenticated();
         });
+        httpSecurity.formLogin(form -> form.loginPage("/login").permitAll()
+                .successHandler(customAuthenticationSuccessHandler))
+                .logout(logout -> {
+                    logout.logoutUrl("/logout");
+                    logout.logoutSuccessUrl("/");
+                }).cors(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable());
 
         return httpSecurity.build();
 

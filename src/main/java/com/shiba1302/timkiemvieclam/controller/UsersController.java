@@ -4,19 +4,21 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shiba1302.timkiemvieclam.entity.Users;
 import com.shiba1302.timkiemvieclam.entity.UsersType;
-import com.shiba1302.timkiemvieclam.entity.demotest;
 import com.shiba1302.timkiemvieclam.services.UserServices;
 import com.shiba1302.timkiemvieclam.services.UsersTypeServices;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
@@ -59,24 +61,21 @@ public class UsersController {
 
     }
 
-    @GetMapping("/demo")
-    public String demoValue(Model model, demotest demotest1) {
-
-        if (demotest1 != null) {
-            model.addAttribute("demo1", new demotest(demotest1.getHo(), demotest1.getTen()));
-        } else {
-            model.addAttribute("demo1", new demotest("", ""));
-        }
-
-        return "thymeleaf-demo";
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 
-    @PostMapping("/demo")
-    public String demoValue1(@Valid demotest demotest1, BindingResult bindingResult,
-            RedirectAttributes redirectAttributes) {
-        System.out.println(demotest1);
-        redirectAttributes.addFlashAttribute(demotest1);
-        return "redirect:/demo";
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
+
+        return "redirect:/";
     }
 
 }

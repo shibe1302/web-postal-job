@@ -26,84 +26,94 @@
 
     <!-- Main CSS-->
     <link th:href="@{/registerAssets/css/main.css}" rel="stylesheet">
+    <style>
+        .shibecustom {
+            border-radius: 5px;
+            border: solid rgb(232, 240, 254);
+        }
+
+        .pt5 {
+            padding-top: 4%;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-        <div class="wrapper wrapper--w680">
-            <div class="card card-4">
-                <div class="card-body">
-                    <h2 class="title">Registration Form</h2>
-                    <form th:action="@{/register/new}" th:object="${user}" method="POST">
-                        <div class="">
-                            <div class="col-12">
-                                <div class="input-group">
-                                    <label class="label">Name</label>
-                                    <input class="input--style-4" type="text" th:field="*{fullName}">
+    <div class="container">
+        <div class="page-wrapper bg-gra-02 pt5 font-poppins">
+            <div class="wrapper wrapper--w680">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Registration Form</h2>
+                        <form th:action="@{/register/new}" th:object="${user}" method="POST">
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Email</label>
+                                        <input class="input--style-4" type="email" th:field="*{email}">
+                                        <div th:if="${error}" class="invalid-feedback">
+                                            <p th:text="${error}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Password</label>
+                                        <input class="input--style-4" type="password" th:field="*{password}">
+                                    </div>
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Birthday</label>
-                                    <div class="input-group-icon">
-                                        <input class="input--style-4" type="date" th:field="*{birthDate}">
-                                        <i class=""></i>
+                            <div class="form-group">
+                                <div class="row row-space">
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <label class="label">Birthday</label>
+                                            <div class="p-0 input-group-icon">
+                                                <input class="shibecustom" type="date" th:field="*{birthDate}">
+                                                <i class=""></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <label class="label">Gender</label>
+                                            <div class="p-t-10">
+                                                <label class="radio-container m-r-45">Male
+                                                    <input type="radio" checked="checked" th:field="*{gender}"
+                                                        th:value="male">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <label class="radio-container">Female
+                                                    <input type="radio" th:field="*{gender}" th:value="female">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Gender</label>
-                                    <div class="p-t-10">
-                                        <label class="radio-container m-r-45">Male
-                                            <input type="radio" checked="checked" th:field="*{gender}" th:value="male">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="radio-container">Female
-                                            <input type="radio" th:field="*{gender}" th:value="female">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Email</label>
-                                    <input class="input--style-4" type="email" th:field="*{email}">
-                                    <div th:if="${error}" class="invalid-feedback">
-                                        <p th:text="${error}"></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Password</label>
-                                    <input class="input--style-4" type="password" th:field="*{password}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label class="label">You are ?</label>
-                            <div class="rs-select2 js-select-simple select--no-search">
-                                <select th:field="*{userTypeId}">
 
-                                    <th:block th:each="userType :${getAllTypes}">
-                                        <option th:text="${userType.userTypeName}" th:value="${userType.userTypeId}">
-                                        </option>
-                                    </th:block>
-                                </select>
-                                <div class="select-dropdown"></div>
+
+                            <div class="input-group">
+                                <label class="label">You are ?</label>
+                                <div class="rs-select2 js-select-simple select--no-search">
+                                    <select th:field="*{userTypeId}">
+
+                                        <th:block th:each="userType :${getAllTypes}">
+                                            <option th:text="${userType.userTypeName}"
+                                                th:value="${userType.userTypeId}">
+                                            </option>
+                                        </th:block>
+                                    </select>
+                                    <div class="select-dropdown"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
-                        </div>
-                    </form>
+                            <div class="p-t-15">
+                                <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
