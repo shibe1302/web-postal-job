@@ -61,9 +61,17 @@ public class UserServices {
             String name = authentication.getName();
             Users usr = usersRespository.findByEmail(name)
                     .orElseThrow(() -> new UsernameNotFoundException("Could not found " + name + " user"));
+
             int userID = usr.getUserId();
-            if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("Recruiter")))
-                ;
+            if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("Recruiter"))) {
+                RecruiterProfile recruiterProfile = recruiterProfileRepository.findById(userID)
+                        .orElse(new RecruiterProfile());
+                return recruiterProfile;
+            } else {
+                JobSeekerProfile jobSeekerProfile = jobSeekerProfileRepository.findById(userID)
+                        .orElse(new JobSeekerProfile());
+                return jobSeekerProfile;
+            }
 
         }
         return null;

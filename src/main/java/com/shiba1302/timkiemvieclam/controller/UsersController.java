@@ -57,7 +57,7 @@ public class UsersController {
         }
         userServices.addnew(users);
 
-        return "dashboard";
+        return "dashboard-main";
 
     }
 

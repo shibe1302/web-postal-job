@@ -27,8 +27,9 @@ public class JobPostActivityController {
             String username = authentication.getName();
             model.addAttribute("username", username);
         }
+        System.out.println(currrentUserProfile);
         model.addAttribute("user", currrentUserProfile);
-        return "dashboard";
+        return "dashboard-main";
     }
 
 }
