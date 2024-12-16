@@ -19,7 +19,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             Authentication authentication) throws IOException, ServletException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
-        System.out.println("---- USERNAME ----" + username + userDetails.getPassword());
+
         boolean hasJobSeekerRole = authentication.getAuthorities().stream()
                 .anyMatch(r -> r.getAuthority().equals("Job Seeker"));
         boolean hasRecruiterRole = authentication.getAuthorities().stream()

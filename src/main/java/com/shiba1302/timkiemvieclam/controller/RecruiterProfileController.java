@@ -66,16 +66,18 @@ public class RecruiterProfileController {
         String fileName = "";
         if (!multipartFile.getOriginalFilename().equals("")) {
             fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            recruiterProfile.setProfilePhoto(fileName);
         }
+
         RecruiterProfile saveUser = recuiterProfileService.addNew(recruiterProfile);
         String uploadDir = "photos/recruiter/" + saveUser.getUserAccountId();
         try {
             fileUploadUlti.saveFile(uploadDir, fileName, multipartFile);
         } catch (Exception e) {
-            // TODO: handle exception
+
             e.printStackTrace();
         }
-        return "redirect:/dashboard-main/";
+        return "redirect:/dashboard/";
     }
 
 }

@@ -17,7 +17,7 @@ public class fileUploadUlti {
             try {
                 Files.createDirectories(uploadPath);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
+
                 e.printStackTrace();
             }
         }

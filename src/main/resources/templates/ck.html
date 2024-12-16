@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+    <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+
+            CKEDITOR.addCss('body {font-family: "Roboto", "Helvetica", "Arial", sans-serif;}');
+            var contentEditor = CKEDITOR.replace('blogContent');
+        });
+    </script>
+</head>
+
+<body>
+
+
+    <textarea type="text" rows="10" name="blogContent" id="blogContent" maxlength="2000"></textarea>
+
+
+
+
+
+</body>
+
+</html>

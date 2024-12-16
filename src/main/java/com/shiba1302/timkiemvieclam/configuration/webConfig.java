@@ -31,6 +31,7 @@ public class webConfig {
             "/global-search/**",
             "/register",
             "/register/**",
+            "/photos/**",
             "/webjars/**",
             "/resources/**",
             "/assets/**",

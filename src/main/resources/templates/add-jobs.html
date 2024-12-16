@@ -10,6 +10,7 @@
     <meta name="author" content="">
 
 
+
     <title>SB Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
@@ -20,6 +21,27 @@
 
     <!-- Custom styles for this template-->
     <link th:href="@{/dashboardAssets/css/sb-admin-2.min.css}" rel="stylesheet">
+
+    <!--ck editor -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+    <script src="https://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+
+            CKEDITOR.addCss('body {font-family: "Roboto", "Helvetica", "Arial", sans-serif;}');
+            var contentEditor = CKEDITOR.replace('blogContent');
+        });
+    </script>
+
+
+
+    <!--ck editor -->
+
 
 </head>
 
@@ -372,66 +394,113 @@
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- shibe1302 -->
+                <!-- shibe1302 style="max-width: 75%; margin-top: 5em;" -->
                 <div class="container-fluid" style="max-width: 75%; margin-top: 5em;">
-
-                    <div class="shadow-sm p-3 mb-5 bg-white rounded">
-
-                        <form th:action="@{/recruiter-profile/addNew}" th:object="${profile}" method="post"
-                            enctype="multipart/form-data">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputEmail4">First name</label>
-                                    <input type="text" class="form-control" th:field="*{firstName}" name="firstName">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Last name</label>
-                                    <input type="text" class="form-control" name="lastName" th:field="*{lastName}">
-                                </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-center pt-3">
+                                <h1 class="heading_font font-weight-bold">Post New Job</h1>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for="inputCity">City</label>
-                                    <input type="text" class="form-control" name="city" th:field="*{city}">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="inputState">State</label>
-                                    <input type="text" class="form-control" name="state" th:field="*{state}">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="inputZip">Country</label>
-                                    <input type="text" class="form-control" name="country" th:field="*{country}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputAddress">Company</label>
-                                <input type="text" class="form-control" name="company" th:field="*{company}">
-                            </div>
-                            <div class="form-group">
-                                <input type="file" name="image" class="form-control" accept="image/png, image/jpeg" />
-                                <input type="text" name="profilePhoto" th:field="*{profilePhoto}" class="form-control"
-                                    hidden />
-                            </div>
-
-
-
-                            <button type="submit" class="btn btn-primary">Cập nhật thông tin</button>
-                            <a class="btn btn-primary" th:href="@{/dashboard/}">Hủy</a>
-                        </form>
+                        </div>
                     </div>
 
+                    <label class="heading_font font_sub_heading_color">Job Details</label>
+
+                    <form th:action="@{/dashboard/postJob}" method="post" th:object="${JobPostActivity}">
+                        <input hidden type="text" th:field="*{jobPostID}">
+                        <input hidden type="text" th:field="*{jobCompanyID.id}">
+                        <input hidden type="text" th:field="*{jobLocationId.id}">
+                        <div class="row">
+                            <div class="col-lg-12 form-group">
+                                <input id="title" type="text" th:field="*{jobTitle}" class="form-control"
+                                    placeholder="Job Title">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <select id="type" th:field="*{jobType}" class="form-control">
+                                    <option value="">Employment Type</option>
+                                    <option th:value="Full-time">Full-time</option>
+                                    <option th:value="Part-time">Part-time</option>
+                                    <option th:value="Freelance">Freelance</option>
+                                    <option th:value="Internship">Internship</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <select id="remote" th:field="*{remote}" class="form-control">
+                                    <option value="">Select a Remote</option>
+                                    <option th:value="Remote-Only">Remote-Only</option>
+                                    <option th:value="Office-Only">Office-Only</option>
+                                    <option th:value="Partial-Remote"> Partial-Remote</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <input id="salary" th:field="*{salary}" type="text" class="form-control"
+                                    placeholder="Salary">
+                            </div>
+                        </div>
+                        <!-- description -->
+                        <label class="mt-2 heading_font font_sub_heading_color">Description</label>
+                        <textarea type="text" rows="10" name="blogContent" id="blogContent" maxlength="2000"
+                            th:field="*{descriptionOfJob}"></textarea>
+
+                        <!-- Company -->
+                        <div class="row pt-2">
+                            <div class="col-lg-12 form-group">
+                                <label class="mt-2 heading_font font_sub_heading_color">Company</label>
+                                <input id="companyName" th:field="*{jobCompanyID.name}" type="text" class="form-control"
+                                    placeholder="Company Name">
+                            </div>
+                        </div>
+
+                        <!-- location -->
+                        <label class="heading_font font_sub_heading_color">Location</label>
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <input th:field="*{jobLocationId.city}" id="city" type="text" class="form-control"
+                                    placeholder="City">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <input id="state" th:field="*{jobLocationId.state}" type="text" class="form-control"
+                                    placeholder="State">
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <input id="country" th:field="*{jobLocationId.country}" type="text" class="form-control"
+                                    placeholder="Country">
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col d-flex justify-content-center" style="gap: 6%;">
+                                <button type="submit" name="submit"
+                                    class="btn btn-primary base_button px-4 py-2 mb-5">Post</button>
+                                <a th:href="@{/dashboard/}" class="btn btn-primary base_button px-4 py-2 mb-5"
+                                    style="background-color: red; border: none;">Cancel</a>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+
+
+
+
                 </div>
-                <!-- /.container-fluid -->
 
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-
-            <!-- End of Footer -->
+            <!-- /.container-fluid -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
@@ -478,6 +547,18 @@
     <script th:src="@{/dashboardAssets/js/demo/chart-area-demo.js}"></script>
     <script th:src="@{/dashboardAssets/js/demo/chart-pie-demo.js}"></script>
 
+
+    <script>
+        var inter = setInterval(
+            function () {
+                var check = document.querySelector(".cke_notification.cke_notification_warning").hidden = true;
+                if (check != null) {
+                    clearInterval(inter);
+                }
+                console.log("hello");
+            }, 100
+        )
+    </script>
 </body>
 
 </html>

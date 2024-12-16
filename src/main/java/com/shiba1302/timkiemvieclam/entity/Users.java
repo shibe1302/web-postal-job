@@ -22,7 +22,7 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int userId;
+    private Integer id132;
 
     @Column(unique = true, name = "email")
     private String email;
@@ -93,11 +93,11 @@ public class Users {
     }
 
     public int getUserId() {
-        return userId;
+        return id132;
     }
 
     public void setUserId(int userId) {
-        this.userId = userId;
+        this.id132 = userId;
     }
 
     public String getEmail() {
@@ -142,7 +142,7 @@ public class Users {
 
     @Override
     public String toString() {
-        return "Users [userId=" + userId + ", email=" + email + ", password=" + password + ", isActive=" + isActive
+        return "Users [userId=" + id132 + ", email=" + email + ", password=" + password + ", isActive=" + isActive
                 + ", registrationDate=" + registrationDate + ", userTypeId=" + userTypeId + ", birthDate=" + birthDate
                 + ", phoneNumber=" + ", gender=" + gender + ", fullName=" + fullName + "]";
     }

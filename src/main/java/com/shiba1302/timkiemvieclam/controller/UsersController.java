@@ -52,12 +52,12 @@ public class UsersController {
             List<UsersType> users_type = usersTypeServices.getall();
             model.addAttribute("getAllTypes", users_type);
             model.addAttribute("user", new Users());
-            model.addAttribute("cac", "lonnnnnnnn");
+
             return "register";
         }
         userServices.addnew(users);
 
-        return "dashboard-main";
+        return "redirect:/dashboard-main";
 
     }
 
