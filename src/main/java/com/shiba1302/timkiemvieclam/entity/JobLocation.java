@@ -24,7 +24,8 @@ public class JobLocation {
     @Column(name = "country")
     private String country;
 
-    public JobLocation(String city, String state, String country) {
+    public JobLocation(Integer id, String city, String state, String country) {
+        this.id = id;
         this.city = city;
         this.state = state;
         this.country = country;

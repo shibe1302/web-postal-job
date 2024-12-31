@@ -21,7 +21,8 @@ public class JobCompany {
     @Column(name = "name")
     private String name;
 
-    public JobCompany(String logo, String name) {
+    public JobCompany(int id, String logo, String name) {
+        this.id = id;
         this.logo = logo;
         this.name = name;
     }
@@ -47,6 +48,7 @@ public class JobCompany {
     }
 
     public String getName() {
+
         return name;
     }
 

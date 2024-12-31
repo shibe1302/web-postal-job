@@ -37,7 +37,7 @@ public class UsersController {
     @GetMapping("/register")
     public String register(Model model) {
         List<UsersType> users_type = usersTypeServices.getall();
-        System.out.println(users_type);
+
         model.addAttribute("getAllTypes", users_type);
         model.addAttribute("user", new Users());
         return "register";

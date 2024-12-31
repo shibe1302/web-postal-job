@@ -1,6 +1,7 @@
 package com.shiba1302.timkiemvieclam.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.shiba1302.timkiemvieclam.entity.JobPostActivity;
+import com.shiba1302.timkiemvieclam.entity.RecruiterJobsDto;
+import com.shiba1302.timkiemvieclam.entity.RecruiterProfile;
 import com.shiba1302.timkiemvieclam.entity.Users;
 import com.shiba1302.timkiemvieclam.services.JobPostActivityServices;
 import com.shiba1302.timkiemvieclam.services.UserServices;
@@ -33,15 +36,19 @@ public class JobPostActivityController {
         Object currrentUserProfile = userServices.getCurrentUserProfile();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            String username = authentication.getName();
-            model.addAttribute("username", username);
+            String currentUsername = authentication.getName();
+            model.addAttribute("username", currentUsername);
+            if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("Recruiter"))) {
+                List<RecruiterJobsDto> recruiterJobs = jobPostActivityServices
+                        .getRecruiterListJobs(((RecruiterProfile) currrentUserProfile).getUserAccountId());
+
+                model.addAttribute("jobPost", recruiterJobs);
+            }
         }
 
         model.addAttribute("user", currrentUserProfile);
-        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("Recruiter"))) {
-            return "dashboard-main";
-        }
-        return "trang-nguoi-dung";
+
+        return "dashboard-main";
 
     }
 
