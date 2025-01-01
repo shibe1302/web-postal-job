@@ -22,7 +22,7 @@ public class JobPostActivity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @Column(name = "job_post_id")
     private Integer jobPostID;
 
     @ManyToOne
@@ -146,12 +146,12 @@ public class JobPostActivity {
         this.jobType = jobType;
     }
 
-    public String getsalary() {
+    public String getSalary() {
         return salary;
     }
 
-    public void setsalary(String salary) {
-        salary = salary;
+    public void setSalary(String salary) {
+        this.salary = salary;
     }
 
     public String getRemote() {

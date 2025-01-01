@@ -436,7 +436,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input id="salary" th:field="*{salary}" type="text" class="form-control"
+                                <input name="salary" th:field="*{salary}" type="text" class="form-control"
                                     placeholder="Salary">
                             </div>
                         </div>
@@ -474,7 +474,7 @@
                         <div class="row mt-4">
                             <div class="col d-flex justify-content-center" style="gap: 6%;">
                                 <button type="submit" name="submit"
-                                    class="btn btn-primary base_button px-4 py-2 mb-5">Post</button>
+                                    class="btn btn-primary base_button px-4 py-2 mb-5">SAVE</button>
                                 <a th:href="@{/dashboard/}" class="btn btn-primary base_button px-4 py-2 mb-5"
                                     style="background-color: red; border: none;">Cancel</a>
                             </div>

@@ -30,6 +30,10 @@
         .hover-card {
             transition: 500ms;
         }
+
+        a:hover {
+            text-decoration: none;
+        }
     </style>
 
 </head>
@@ -401,7 +405,8 @@
 
                         <!-- Earnings (Monthly) Card Example -->
                         <th:block th:each="jobPost:${jobPost}">
-                            <div class="col-xl-6 col-md-6 mb-4">
+                            <a th:href="@{/job-details-apply/{id}(id=${jobPost.jobPostID})}"
+                                class="col-xl-6 col-md-6 mb-4">
                                 <div class="card border-left-primary h-100 py-2 hover-card">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
@@ -421,13 +426,14 @@
                                                     [[${jobPost.jobLocationID.city}]],
                                                     [[${jobPost.jobLocationID.state}]]
 
+
                                                 </div>
                                             </div>
 
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
 
                         </th:block>
 
@@ -504,11 +510,9 @@
     <script th:src="@{/dashboardAssets/js/demo/chart-area-demo.js}"></script>
     <script th:src="@{/dashboardAssets/js/demo/chart-pie-demo.js}"></script>
 
+    <script>
 
-
-
-
-
+    </script>
 
 </body>
 

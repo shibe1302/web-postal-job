@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.shiba1302.timkiemvieclam.entity.JobPostActivity;
@@ -64,10 +65,26 @@ public class JobPostActivityController {
         Users user = userServices.getCurrentUser();
         if (user != null) {
             jobPostActivity.setPostedById(user);
+            System.out.println(jobPostActivity.getSalary());
         }
         jobPostActivity.setPostedDate(new Date());
         model.addAttribute("jobPostActivity", jobPostActivity);
         JobPostActivity saved = jobPostActivityServices.addNew(jobPostActivity);
+        return "redirect:/dashboard/";
+    }
+
+    @PostMapping("dashboard/edit/{id}")
+    public String editJob(@PathVariable("id") int id, Model model) {
+        JobPostActivity jobPostActivity = jobPostActivityServices.getOne(id);
+        model.addAttribute("JobPostActivity", jobPostActivity);
+        model.addAttribute("user", userServices.getCurrentUserProfile());
+        return "add-jobs";
+    }
+
+    @PostMapping("dashboard/deleteJob/{id}")
+    public String deleteJob(@PathVariable("id") int id, Model model) {
+        jobPostActivityServices.deleteJob(id);
+        model.addAttribute("user", userServices.getCurrentUserProfile());
         return "redirect:/dashboard/";
     }
 

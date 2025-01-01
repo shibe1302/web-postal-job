@@ -39,4 +39,15 @@ public class JobPostActivityServices {
         }
         return recruiterJobsDtoList;
     }
+
+    public JobPostActivity getOne(int id) {
+
+        return jobPostActivityRespository.findById(id).orElseThrow(() -> new RuntimeException("Job not found"));
+    }
+
+    public void deleteJob(int id) {
+        JobPostActivity jobPostActivity = jobPostActivityRespository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Job not found"));
+        jobPostActivityRespository.delete(jobPostActivity);
+    }
 }
